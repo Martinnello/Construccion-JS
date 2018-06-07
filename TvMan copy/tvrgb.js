@@ -30,7 +30,6 @@ function draw(v,c,bc,w,h) {
         var g = document.getElementById("green").value;
         var b = document.getElementById("blue").value;
 
-
         if (r != 0) {
             data[i] = r;
         }

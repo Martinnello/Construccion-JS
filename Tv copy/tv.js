@@ -3,6 +3,7 @@ var ctx;
 var video;
 var volumbar;
 var cameras = [];
+var procesoID;
 
 function main() {
   canvas = document.getElementById("canvas");
@@ -13,6 +14,8 @@ function main() {
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
   video.addEventListener('play', render);
   volumbar.addEventListener('change', VolumeControl);
+  var i = 1;
+  procesoID = setInterval( function() { ChooseCam(i);if(i >= 4) {i=1} else {i++}}, 5000);
 }
 
 function CreateScene() {
@@ -55,22 +58,19 @@ function VolumeControl() {
 }
 
 function ChooseCam(x) {
-  switch (x) {
-    case 1:
+  if (x == 1) {
       Select(1);
-      break;
-    case 2:
+    }
+  else if (x == 2) {
       Select(2);
-      break;
-    case 3:
+    }
+  else if (x == 3) {
       Select(3);
-      break;
-    case 4:
+    }
+  else {
       Select(4);
-      break;
-    default:
-      Select(1);
   }
+}
 
 function Select(y) {
     if (video != undefined){video.muted = true;}
@@ -85,4 +85,3 @@ function Select(y) {
       }
     }
   }
-}
