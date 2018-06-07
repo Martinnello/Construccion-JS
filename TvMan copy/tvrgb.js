@@ -1,21 +1,31 @@
-document.addEventListener('DOMContentLoaded', function(){
-    var v = document.getElementById('v');
-    var canvas = document.getElementById('c');
-    var ctx = canvas.getContext('2d');
-    var back = document.createElement('canvas');
-    var backcontext = back.getContext('2d');
+var v;
+var canvas;
+var ctx;
+var back;
+var backcontext;
 
-    var cw,ch;
+var cw,ch;
 
-    v.addEventListener('play', function(){
-        cw = canvas.width;
-        ch = canvas.height;
-        back.width = cw;
-        back.height = ch;
-        draw(v,ctx,backcontext,cw,ch);
-    },false);
+function main() {
 
-},false);
+    v = document.getElementById('v');
+    canvas = document.getElementById('c');
+    ctx = canvas.getContext('2d');
+    back = document.createElement('canvas');
+    backcontext = back.getContext('2d');
+    cw = canvas.width;
+    ch = canvas.height;
+    back.width = cw;
+    back.height = ch;
+
+    v.addEventListener('play', render);
+}
+
+function render() {
+  
+  requestAnimationFrame(render);
+  draw(v,ctx,backcontext,cw,ch);
+}
 
 function draw(v,c,bc,w,h) {
     if(v.paused || v.ended) return false;
