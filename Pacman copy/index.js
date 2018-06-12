@@ -683,6 +683,7 @@ Pacman.Map = function (size) {
     return {
         "draw"         : draw,
         "drawBlock"    : drawBlock,
+        "drawWall"	   : drawWall,
         "drawPills"    : drawPills,
         "block"        : block,
         "setBlock"     : setBlock,
@@ -837,6 +838,31 @@ var PACMAN = (function () {
         map.reset();
         map.draw(ctx);
         startLevel();
+
+        setInterval(function(){ alert("Descansa"); }, 5000);
+    }
+
+    var x = 250;
+    var y = 250;
+    var dx = 2;
+    var dy = -2;
+
+    function drawBall() {
+        ctx.beginPath();
+        ctx.arc(x, y, 10, 0, Math.PI*2);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function drawingBall() {
+        drawBall();
+        x += dx;
+        y += dy;
+        if( x >= canvas.width || x <= 0)
+			dx = -dx;
+		if( y >= canvas.height || y <= 0)
+			dy = -dy;
     }
 
     function keyDown(e) {
@@ -920,7 +946,11 @@ var PACMAN = (function () {
     function mainDraw() { 
 
         var diff, u, i, len, nScore;
-        
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        map.draw(ctx);
+        map.drawPills(ctx);
+
         ghostPos = [];
 
         for (i = 0, len = ghosts.length; i < len; i += 1) {
@@ -932,6 +962,7 @@ var PACMAN = (function () {
             redrawBlock(ghostPos[i].old);
         }
         redrawBlock(u.old);
+
         
         for (i = 0, len = ghosts.length; i < len; i += 1) {
             ghosts[i].draw(ctx);
@@ -957,7 +988,8 @@ var PACMAN = (function () {
                     timerStart = tick;
                 }
             }
-        }                             
+        }
+        drawingBall();                         
     };
 
     function mainLoop() {
@@ -1038,7 +1070,7 @@ var PACMAN = (function () {
         
         var i, len, ghost,
             blockSize = wrapper.offsetWidth / 19,
-            canvas    = document.createElement("canvas");
+            canvas    = document.getElementById("canvas");
         
         canvas.setAttribute("width", (blockSize * 19) + "px");
         canvas.setAttribute("height", (blockSize * 22) + 30 + "px");
