@@ -23,8 +23,9 @@ function main() {
 
 function render() {
   
-  requestAnimationFrame(render);
   draw(v,ctx,backcontext,cw,ch);
+  requestAnimationFrame(render);
+  
 }
 
 function draw(v,c,bc,w,h) {
@@ -34,20 +35,17 @@ function draw(v,c,bc,w,h) {
     // Grab the pixel data from the backing canvas
     var idata = bc.getImageData(0,0,w,h);
     var data = idata.data;
+    var r = document.getElementById("red").value;
+    var g = document.getElementById("green").value;
+    var b = document.getElementById("blue").value;
     // Loop through the pixels, turning them grayscale
     for(var i = 0; i < data.length; i+=4) {
-        var r = document.getElementById("red").value;
-        var g = document.getElementById("green").value;
-        var b = document.getElementById("blue").value;
-
         if (r != 0) {
             data[i] = r;
         }
-
         if (g != 0) {
             data[i+1] = g;
         }
-
         if (b != 0) {
             data[i+2] = b;
         }
@@ -57,5 +55,5 @@ function draw(v,c,bc,w,h) {
     // Draw the pixels onto the visible canvas
     c.putImageData(idata,0,0);
     // Start over!
-    setTimeout(function(){ draw(v,c,bc,w,h); }, 0);
+    setTimeout(function(){ draw(v,c,bc,w,h); }, 10);
 }
