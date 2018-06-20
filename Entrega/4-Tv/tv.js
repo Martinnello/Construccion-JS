@@ -33,6 +33,7 @@ function CreateScene() {
 
 function render() {
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  Refreshclock();
   requestAnimationFrame(render);
 }
 
@@ -52,6 +53,24 @@ function Play() {
 
 function VolumeControl() {
   video.volume = volumbar.value;
+}
+
+function Refreshclock() {
+  var second;
+  second = Math.round(video.currentTime);
+  if (second >= 10) {
+      document.getElementById("Clock").innerHTML = "00:" + second;
+  }else {
+      document.getElementById("Clock").innerHTML = "00:0" + second;
+  }
+  if (second >= 60) {
+    second = (Math.round(video.currentTime)) - 60;
+    if (second >= 10) {
+        document.getElementById("Clock").innerHTML = "01:" + second;
+    }else {
+        document.getElementById("Clock").innerHTML = "01:0" + second;
+    }
+  }
 }
 
 function ChooseCam(x) {
